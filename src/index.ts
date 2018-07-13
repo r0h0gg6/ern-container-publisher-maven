@@ -1,9 +1,10 @@
 import { ContainerPublisher } from 'ern-container-publisher'
-import { MavenUtils, shell, childProcess, log, NativePlatform } from 'ern-core'
+import { shell, childProcess, log, NativePlatform } from 'ern-core'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
 const { execp } = childProcess
+import MavenUtils from './MavenUtils'
 
 export default class MavenPublisher implements ContainerPublisher {
   public static readonly DEFAULT_ARTIFACT_ID: string = 'local-container'
