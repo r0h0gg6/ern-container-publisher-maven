@@ -28,8 +28,10 @@ Default to `1.0.0`
  The `ern publish-container` CLI command can be used as follow to manually publish a Container using the maven publisher :
 
 ```bash
-$ ern publish-container --containerPath [pathToContainer] -p maven -v [containerVersion] -u [mavenRepoUrl] -c '{"artifactId":"[artifactId]", "groupId":"[groupId]", "mavenUser":"[mavenUser]", "mavenPasword":"[mavenPassword]"}'
+$ ern publish-container --containerPath [pathToContainer] -p maven -v [containerVersion] -u [mavenRepoUrl] -e '{"artifactId":"[artifactId]", "groupId":"[groupId]", "mavenUser":"[mavenUser]", "mavenPasword":"[mavenPassword]"}'
 ```  
+
+Instead of passing the whole configuration on the command line for `--extra/-e`, it is also possible to use a file path to a json file holding the configuration, or a path to a file stored in the Cauldron. Check out the [ern publish-container](https://native.electrode.io/cli-commands/publish-container) command documentation for more info.
 
 ### **With Cauldron**
 
@@ -51,8 +53,10 @@ $ ern publish-container --containerPath [pathToContainer] -p maven -v [container
 To automatically publish the Cauldron generated Containers of a target native application and platform, the `ern cauldron add publisher` command can be used as follow :
 
 ```bash
-$ ern cauldron add publisher -p maven -u [mavenRepoUrl] -c '{"artifactId":"[artifactId]", "groupId":"[groupId]", "mavenUser":"[mavenUser]"", "mavenPassword": "[mavenPassword]"}' 
+$ ern cauldron add publisher -p maven -u [mavenRepoUrl] -e '{"artifactId":"[artifactId]", "groupId":"[groupId]", "mavenUser":"[mavenUser]"", "mavenPassword": "[mavenPassword]"}' 
 ```
+
+Instead of passing the whole configuration on the command line for `--extra/-e`, it is also possible to use a file path to a json file holding the configuration, or a path to a file stored in the Cauldron. Check out the [ern cauldron add-publisher](https://native.electrode.io/cli-commands/cauldron/add-publisher) command documentation for more info.
 
 This will result in the following publisher entry in Cauldron :
 
