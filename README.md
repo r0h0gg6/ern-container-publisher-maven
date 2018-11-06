@@ -103,6 +103,12 @@ publisher.publish(
 })
 ```
 
+## Additional notes
+
+You can include environment variables inside the publication url by enclosing them in `${}`.  
+Environment variables will be evaluated to build the string.
+For example `file:${WORKSPACE}/.m2/repository` will evaluate to `file:/Users/foo/.m2/repository` is you have a system environment variable `WORKSPACE=/Users/foo/`.
+
 
 **(*)** [Maven Gradle Plugin](https://docs.gradle.org/current/userguide/maven_plugin.html) is being used for publication (This publisher injects the necessary in the Container build.gradle). The Maven plugin allows to provide the username and password as plain text strings or variable names. In the case of variable name, the strings are not stored directly in the `build.gradle` file but in the `~/.gradle/gradle.properties` file local to the machine running the publisher. 
 The values used for `mavenUser`/`mavenPassword` in this publisher will end up being stored as plain text strings in the `build.gradle`. If you instead with to keep `mavenUser`/`mavenPassword` values out of the `build.gradle` file (probably for security reasons), you can enclose the values of `mavenUser`/`mavenPassword` in brackets. For example `[userVariableName]`. Doing so will allow you to keep an external `~/gradle/gradle.properties` file defining the `userVariableName` and its value.
