@@ -60,20 +60,10 @@ export default class MavenPublisher implements ContainerPublisher {
       url = MavenPublisher.DEFAULT_URL
     }
 
+    url = MavenUtils.processUrl(url)
     if (MavenUtils.isLocalMavenRepo(url)) {
-      MavenUtils.createLocalMavenDirectoryIfDoesNotExist()
+      MavenUtils.createLocalMavenDirectoryIfDoesNotExist(url)
     }
-
-    url = url.replace('file:~', `file:${os.homedir() || ''}`)
-    url = url.replace(/\${([^}]+)}/g, (match, vars) => { 
-      const envVariables = vars ? vars.split('|') : []
-      for (const e in envVariables) {
-        if (process.env[e]) {
-          return process.env[e]!
-        }
-      }
-      return 'undefined'
-    })
 
     fs.appendFileSync(
       path.join(containerPath, 'lib', 'build.gradle'),

@@ -4,7 +4,7 @@ import path from 'path'
 import { shell, log } from 'ern-core'
 
 const HOME_DIRECTORY = os.homedir()
-const FILE_REGEX = /^file:\/\//
+const FILE_REGEX = /^file:\/\/(.*)/
 
 export default class MavenUtils {
   public static mavenRepositoryType(
@@ -64,23 +64,19 @@ export default class MavenUtils {
     }
   }
 
-  public static getDefaultMavenLocalDirectory = () => {
-    const pathToRepository = path.join(HOME_DIRECTORY, '.m2', 'repository')
-    return `file://${pathToRepository}`
-  }
+  public static getDefaultMavenLocalDirectory = () => path.join(HOME_DIRECTORY, '.m2', 'repository')
 
+  public static getDefaultMavenLocalUrl = () => `file://${MavenUtils.getDefaultMavenLocalDirectory()}`
+  
   public static isLocalMavenRepo(repoUrl: string): boolean {
-    if (repoUrl && repoUrl === MavenUtils.getDefaultMavenLocalDirectory()) {
+    if (repoUrl && FILE_REGEX.test(repoUrl)) {
       return true
     }
     return false
   }
 
-  public static createLocalMavenDirectoryIfDoesNotExist() {
-    const dir = MavenUtils.getDefaultMavenLocalDirectory().replace(
-      FILE_REGEX,
-      ''
-    )
+  public static createLocalMavenDirectoryIfDoesNotExist(repoUrl: string) {
+    const dir = FILE_REGEX.exec(repoUrl)![1]
     if (!fs.existsSync(dir)) {
       log.debug(
         `Local Maven repository directory does not exist, creating one.`
@@ -89,5 +85,20 @@ export default class MavenUtils {
     } else {
       log.debug(`Local Maven repository directory already exists`)
     }
+  }
+
+  public static processUrl(repoUrl: string) {
+    repoUrl = repoUrl.replace('file:~', `file:${os.homedir() || ''}`)
+    repoUrl = repoUrl.replace('file://~', `file://${os.homedir() || ''}`)
+    repoUrl = repoUrl.replace(/\${([^}]+)}/g, (match, vars) => { 
+      const envVariables = vars ? vars.split('|') : []
+      for (const e of envVariables) {
+        if (process.env[e]) {
+          return process.env[e]!
+        }
+      }
+      return 'undefined'
+    })
+    return repoUrl
   }
 }

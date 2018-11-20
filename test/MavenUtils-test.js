@@ -1,13 +1,23 @@
 import MavenUtils from '../src/MavenUtils'
 import { expect } from 'chai'
 import 'mocha'
+import sinon from 'sinon'
+import fs from 'fs'
+import os from 'os'
+import * as core from 'ern-core'
 
 const fileRepoUrl = 'file://Users/username/repo'
 const httpRepoUrl = 'http://mymavenrepo.com:8081/repository'
 const httpsRepoUrl = 'https://mymavenrepo.com:443/repository'
 const unknownRepoUrl = 'toto'
 
+const sandbox = sinon.createSandbox()
+
 describe('MavenUtils', () => {
+  afterEach(() => {
+    sandbox.restore()
+  })
+
   describe('mavenRepositoryType', () => {
     it('should return http for an http repo url', () => {
       const result = MavenUtils.mavenRepositoryType(httpRepoUrl)
@@ -89,6 +99,51 @@ describe('MavenUtils', () => {
     it('should return undefined for an unknown repository type', () => {
       const result = MavenUtils.targetRepositoryGradleStatement(unknownRepoUrl)
       expect(result).undefined
+    })
+  })
+
+  describe('processUrl', () => {
+    it('should replace tidle with home directory [1]', () => {
+      const result = MavenUtils.processUrl('file:~/test')
+      expect(result).eql(`file:${os.homedir()}/test`)
+    })
+
+    it('should replace tidle with home directory [2]', () => {
+      const result = MavenUtils.processUrl('file://~/test')
+      expect(result).eql(`file://${os.homedir()}/test`)
+    })
+
+    it('should evaluate env variables', () => {
+      const result = MavenUtils.processUrl('file://${HOME}/test')
+      expect(result).eql(`file://${os.homedir()}/test`)
+    })
+
+    it('should evaluate env variables with fallback', () => {
+      const result = MavenUtils.processUrl('file://${NONEXISTINGVAR|HOME}/test')
+      expect(result).eql(`file://${os.homedir()}/test`)
+    })
+  })
+
+  describe('createLocalMavenDirectoryIfDoesNotExist', () => {
+    it('should create the directory [1]', () => {
+      sandbox.stub(fs, 'existsSync').returns(false)
+      const mkdirStub = sandbox.stub(core.shell, 'mkdir')
+      MavenUtils.createLocalMavenDirectoryIfDoesNotExist(MavenUtils.getDefaultMavenLocalUrl())
+      sandbox.assert.calledWith(mkdirStub, '-p', MavenUtils.getDefaultMavenLocalDirectory())
+    })
+
+    it('should create the directory [2]', () => {
+      sandbox.stub(fs, 'existsSync').returns(false)
+      const mkdirStub = sandbox.stub(core.shell, 'mkdir')
+      MavenUtils.createLocalMavenDirectoryIfDoesNotExist('file:///Users/foo/bar')
+      sandbox.assert.calledWith(mkdirStub, '-p', '/Users/foo/bar')
+    })
+
+    it('should not create the directory if it exists', () => {
+      sandbox.stub(fs, 'existsSync').returns(true)
+      const mkdirStub = sandbox.stub(core.shell, 'mkdir')
+      MavenUtils.createLocalMavenDirectoryIfDoesNotExist('file:///Users/foo/bar')
+      sandbox.assert.notCalled(mkdirStub)
     })
   })
 })
