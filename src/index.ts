@@ -65,7 +65,15 @@ export default class MavenPublisher implements ContainerPublisher {
     }
 
     url = url.replace('file:~', `file:${os.homedir() || ''}`)
-    url = url.replace(/\${([^}]+)}/g, (match, envVariable) => process.env[envVariable]!)
+    url = url.replace(/\${([^}]+)}/g, (match, vars) => { 
+      const envVariables = vars ? vars.split('|') : []
+      for (const e in envVariables) {
+        if (process.env[e]) {
+          return process.env[e]!
+        }
+      }
+      return 'undefined'
+    })
 
     fs.appendFileSync(
       path.join(containerPath, 'lib', 'build.gradle'),
