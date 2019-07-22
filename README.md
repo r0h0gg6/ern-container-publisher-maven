@@ -44,7 +44,7 @@ Instead of passing the whole configuration on the command line for `--extra/-e`,
 
 - `--config/-c` : A json string (or path to a json file) containing the following required properties:
   - `artifactId` : The artifact id to be used for the Container  
-  Defaults to `[nativeAppName]-ern-container`
+  Defaults to `local-ern-container`
   - `groupId` : The group id to be used for the Container  
   Defaults to `com.walmartlabs.ern`
   - `mavenUser` [Optional] : The username to use for publication **(*)** 
