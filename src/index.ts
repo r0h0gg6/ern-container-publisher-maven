@@ -68,32 +68,32 @@ export default class MavenPublisher implements ContainerPublisher {
     fs.appendFileSync(
       path.join(containerPath, 'lib', 'build.gradle'),
       `
-  apply plugin: 'maven'
-  
-  task androidSourcesJar(type: Jar) {
-      classifier = 'sources'
-      from android.sourceSets.main.java.srcDirs
-      include '**/*.java'
-  }
-  
-  artifacts {
-      archives androidSourcesJar
-  }
-  
-  uploadArchives {
-      repositories {
-          mavenDeployer {
-              pom.version = '${containerVersion}'
-              pom.artifactId = '${extra.artifactId}'
-              pom.groupId = '${extra.groupId}'
-              ${MavenUtils.targetRepositoryGradleStatement(url, {
-                mavenPassword: extra && extra.mavenPassword,
-                mavenUser: extra && extra.mavenUser,
-              })}
-          }
-      }
-  }
-  `
+apply plugin: 'maven'
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+    include '**/*.java'
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.version = '${containerVersion}'
+            pom.artifactId = '${extra.artifactId}'
+            pom.groupId = '${extra.groupId}'
+            ${MavenUtils.targetRepositoryGradleStatement(url, {
+              mavenPassword: extra && extra.mavenPassword,
+              mavenUser: extra && extra.mavenUser,
+            })}
+        }
+    }
+}
+`
     )
 
     try {

@@ -67,7 +67,7 @@ export default class MavenUtils {
   public static getDefaultMavenLocalDirectory = () => path.join(HOME_DIRECTORY, '.m2', 'repository')
 
   public static getDefaultMavenLocalUrl = () => `file://${MavenUtils.getDefaultMavenLocalDirectory()}`
-  
+
   public static isLocalMavenRepo(repoUrl: string): boolean {
     if (repoUrl && FILE_REGEX.test(repoUrl)) {
       return true
@@ -90,7 +90,7 @@ export default class MavenUtils {
   public static processUrl(repoUrl: string) {
     repoUrl = repoUrl.replace('file:~', `file:${os.homedir() || ''}`)
     repoUrl = repoUrl.replace('file://~', `file://${os.homedir() || ''}`)
-    repoUrl = repoUrl.replace(/\${([^}]+)}/g, (match, vars) => { 
+    repoUrl = repoUrl.replace(/\${([^}]+)}/g, (match, vars) => {
       const envVariables = vars ? vars.split('|') : []
       for (const e of envVariables) {
         if (process.env[e]) {
