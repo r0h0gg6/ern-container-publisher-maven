@@ -3,6 +3,10 @@
   "version": "1.0.5",
   "description": "Electrode Native Maven Container Publisher",
   "main": "./dist/index.js",
+  "files": [
+    "dist/",
+    "src/"
+  ],
   "homepage": "http://www.electrode.io",
   "repository": {
     "type": "git",
