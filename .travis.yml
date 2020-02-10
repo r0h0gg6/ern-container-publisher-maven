@@ -1,8 +1,6 @@
 language: node_js
+cache: yarn
 node_js:
-- '9'
-sudo: enabled
-install:
-- npm install
-script:
-- npm run test
+  - v12
+before_install:
+  - mkdir -p $HOME/.ern
