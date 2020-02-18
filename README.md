@@ -21,12 +21,10 @@ This publisher can be used to publish Android Electrode Native Containers to a l
 
 #### Optional
 
-- `--containerPath` : Path to the Container to publish.
-
+- `--containerPath` : Path to the Container to publish.\
 Defaults to the Electrode Native default Container Generation path (`~/.ern/containergen/out/[platform]` unless changed through config)
 
-- `--containerVersion/-v` : Version of the Container to publish.
-
+- `--containerVersion/-v` : Version of the Container to publish.\
 Default to `1.0.0`
 
 The `ern publish-container` CLI command can be used as follow to manually publish a Container using the maven publisher:
@@ -62,7 +60,7 @@ ern cauldron add publisher -p maven -u [mavenRepoUrl] -e '{"artifactId":"[artifa
 
 Instead of passing the whole configuration on the command line for `--extra/-e`, it is also possible to use a file path to a json file holding the configuration, or a path to a file stored in the Cauldron. Check out the [ern cauldron add-publisher](https://native.electrode.io/cli-commands/cauldron/add-publisher) command documentation for more info.
 
-This will result in the following publisher entry in Cauldron :
+This will result in the following publisher entry in Cauldron:
 
 ```json
 {
@@ -79,7 +77,7 @@ This will result in the following publisher entry in Cauldron :
 
 This is only needed once. Once the configuration for the publisher is stored in Cauldron, any new Cauldron generated Container will be publihsed to maven.
 
-### Programatically
+### Programmatically
 
 ```js
 import MavenPublisher from 'ern-container-publisher-maven'
