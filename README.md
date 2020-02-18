@@ -1,6 +1,7 @@
 # Electrode Native Maven Container Publisher
 
 [![Build Status][1]][2]
+[![ci][3]][4]
 
 This publisher can be used to publish Android Electrode Native Containers to a local or remote Maven repository.
 
@@ -118,3 +119,5 @@ The values used for `mavenUser`/`mavenPassword` in this publisher will end up be
 
 [1]: https://travis-ci.org/electrode-io/ern-container-publisher-maven.svg?branch=master
 [2]: https://travis-ci.org/electrode-io/ern-container-publisher-maven
+[3]: https://github.com/electrode-io/ern-container-publisher-maven/workflows/ci/badge.svg
+[4]: https://github.com/electrode-io/ern-container-publisher-maven/actions
