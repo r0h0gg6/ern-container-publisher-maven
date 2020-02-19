@@ -1,7 +1,6 @@
 # Electrode Native Maven Container Publisher
 
-[![Build Status][1]][2]
-[![ci][3]][4]
+[![ci][1]][2]
 
 This publisher can be used to publish Android Electrode Native Containers to a local or remote Maven repository.
 
@@ -117,7 +116,5 @@ If you need different environment variables for different environments, you can 
 **(*)** [Maven Gradle Plugin](https://docs.gradle.org/current/userguide/maven_plugin.html) is being used for publication (This publisher injects the necessary in the Container build.gradle). The Maven plugin allows to provide the username and password as plain text strings or variable names. In the case of variable name, the strings are not stored directly in the `build.gradle` file but in the `~/.gradle/gradle.properties` file local to the machine running the publisher.
 The values used for `mavenUser`/`mavenPassword` in this publisher will end up being stored as plain text strings in the `build.gradle`. If you instead with to keep `mavenUser`/`mavenPassword` values out of the `build.gradle` file (probably for security reasons), you can enclose the values of `mavenUser`/`mavenPassword` in brackets. For example `[userVariableName]`. Doing so will allow you to keep an external `~/gradle/gradle.properties` file defining the `userVariableName` and its value.
 
-[1]: https://travis-ci.org/electrode-io/ern-container-publisher-maven.svg?branch=master
-[2]: https://travis-ci.org/electrode-io/ern-container-publisher-maven
-[3]: https://github.com/electrode-io/ern-container-publisher-maven/workflows/ci/badge.svg
-[4]: https://github.com/electrode-io/ern-container-publisher-maven/actions
+[1]: https://github.com/electrode-io/ern-container-publisher-maven/workflows/ci/badge.svg
+[2]: https://github.com/electrode-io/ern-container-publisher-maven/actions
