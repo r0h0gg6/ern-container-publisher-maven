@@ -7,19 +7,20 @@
     "dist/",
     "src/"
   ],
-  "homepage": "http://www.electrode.io",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "yarn build",
+    "test": "mocha -r ts-node/register test/*.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/electrode-io/ern-container-publisher-maven.git"
   },
-  "bugs": {
-    "url": "https://github.com/electrode-io/ern-container-publisher-maven/issues"
-  },
   "keywords": [
     "electrode",
     "ern",
-    "react-native",
-    "ern-container-publisher"
+    "ern-container-publisher",
+    "react-native"
   ],
   "contributors": [
     {
@@ -27,19 +28,19 @@
       "email": "blemaire@walmartlabs.com"
     },
     {
-      "name": "Bharath Marulasiddappa",
-      "email": "BMarulasiddappa@walmartlabs.com"
+      "name": "Frieder Bluemle",
+      "email": "frieder.bluemle@walmart.com"
     },
     {
-      "name": "Deepu Ganapathiyadan",
-      "email": "DGanapathiyadan@walmartlabs.com"
-    },
-    {
-      "name": "Krunal Shah",
-      "email": "KShah1@walmartlabs.com"
+      "name": "Karthic Paramasivam",
+      "email": "karthiccc23@gmail.com"
     }
   ],
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/electrode-io/ern-container-publisher-maven/issues"
+  },
+  "homepage": "https://www.electrode.io",
   "dependencies": {
     "ern-container-publisher": "0.38.16",
     "ern-core": "0.38.16"
@@ -54,13 +55,5 @@
     "sinon": "^8.1.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
-  },
-  "scripts": {
-    "test": "mocha -r ts-node/register test/*.js",
-    "build": "tsc",
-    "prepublish": "yarn build"
-  },
-  "engines": {
-    "node": ">=6"
   }
 }
