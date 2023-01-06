@@ -68,32 +68,37 @@ export default class MavenPublisher implements ContainerPublisher {
     fs.appendFileSync(
       path.join(containerPath, 'lib', 'build.gradle'),
       `
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs
-    include '**/*.java'
 }
 
 artifacts {
     archives androidSourcesJar
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            pom.version = '${containerVersion}'
-            pom.artifactId = '${extra.artifactId}'
-            pom.groupId = '${extra.groupId}'
-            ${MavenUtils.targetRepositoryGradleStatement(url, {
-              mavenPassword: extra && extra.mavenPassword,
-              mavenUser: extra && extra.mavenUser,
-            })}
+publishing {
+    publications {
+        release(MavenPublication) {
+            afterEvaluate {
+                groupId = "${extra.groupId}"
+                artifactId = "${extra.artifactId}"
+                version = "${containerVersion}"
+                from components.release
+                artifact tasks.androidSourcesJar
+            }
         }
     }
-}
-`
+
+${MavenUtils.targetRepositoryGradleStatement(url, {
+  mavenPassword: extra && extra.mavenPassword,
+  mavenUser: extra && extra.mavenUser,
+})}
+${MavenUtils.isSigningRequired(url)}
+  }`
     )
 
     try {
@@ -112,6 +117,6 @@ uploadArchives {
 
   public async buildAndUploadArchive(): Promise<any> {
     const gradlew = /^win/.test(process.platform) ? 'gradlew' : './gradlew'
-    return execp(`${gradlew} lib:uploadArchives`)
+    return execp(`${gradlew} publish`)
   }
 }

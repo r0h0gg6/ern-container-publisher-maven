@@ -10,6 +10,8 @@ const fileRepoUrl = 'file://Users/username/repo'
 const httpRepoUrl = 'http://mymavenrepo.com:8081/repository'
 const httpsRepoUrl = 'https://mymavenrepo.com:443/repository'
 const unknownRepoUrl = 'toto'
+const mavenTestUser = 'user'
+const mavenTestPassword = 'password'
 
 const sandbox = sinon.createSandbox()
 
@@ -43,28 +45,52 @@ describe('MavenUtils', () => {
   describe('targetRepositoryGradleStatement', () => {
     it('should return the gradle statement for a file repository', () => {
       const result = MavenUtils.targetRepositoryGradleStatement(fileRepoUrl)
-      expect(result).eql(`repository(url: "${fileRepoUrl}")`)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${fileRepoUrl}"
+        }
+    }`)
     })
 
     it('should ignore user and pass for a file repository', () => {
       const result = MavenUtils.targetRepositoryGradleStatement(fileRepoUrl, {
-        mavenUser: 'user',
-        mavenPassword: 'password'
+        mavenUser: mavenTestUser,
+        mavenPassword: mavenTestUser
       })
-      expect(result).eql(`repository(url: "${fileRepoUrl}")`)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${fileRepoUrl}"
+        }
+    }`)
     })
 
     it('should return the gradle statement for an http repository', () => {
       const result = MavenUtils.targetRepositoryGradleStatement(httpRepoUrl)
-      expect(result).eql(`repository(url: "${httpRepoUrl}") `)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${httpRepoUrl}"
+        }
+    }`)
     })
 
     it('should return the gradle statement for an http repository with user and pass plain strings', () => {
       const result = MavenUtils.targetRepositoryGradleStatement(httpRepoUrl, {
-        mavenUser: 'user',
-        mavenPassword: 'password'
+        mavenUser: mavenTestUser,
+        mavenPassword: mavenTestPassword
       })
-      expect(result).eql(`repository(url: "${httpRepoUrl}") { authentication(userName: "user", password: "password") }`)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${httpRepoUrl}"
+            credentials {
+                username = ${mavenTestUser}
+                password = ${mavenTestPassword}
+            }
+        }
+    }`)
     })
 
     it('should return the gradle statement for an http repository with user and pass var', () => {
@@ -72,20 +98,43 @@ describe('MavenUtils', () => {
         mavenUser: '[user]',
         mavenPassword: '[password]'
       })
-      expect(result).eql(`repository(url: "${httpRepoUrl}") { authentication(userName: user, password: password) }`)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${httpRepoUrl}"
+            credentials {
+                username = ${mavenTestUser}
+                password = ${mavenTestPassword}
+            }
+        }
+    }`)
     })
 
     it('should return the gradle statement for an https repository', () => {
       const result = MavenUtils.targetRepositoryGradleStatement(httpsRepoUrl)
-      expect(result).eql(`repository(url: "${httpsRepoUrl}") `)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${httpsRepoUrl}"
+        }
+    }`)
     })
 
     it('should return the gradle statement for an https repository with user and pass plain strings', () => {
       const result = MavenUtils.targetRepositoryGradleStatement(httpsRepoUrl, {
-        mavenUser: 'user',
-        mavenPassword: 'password'
+        mavenUser: mavenTestUser,
+        mavenPassword: mavenTestPassword
       })
-      expect(result).eql(`repository(url: "${httpsRepoUrl}") { authentication(userName: "user", password: "password") }`)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${httpsRepoUrl}"
+            credentials {
+                username = ${mavenTestUser}
+                password = ${mavenTestPassword}
+            }
+        }
+    }`)
     })
 
     it('should return the gradle statement for an https repository with user and pass var', () => {
@@ -93,7 +142,16 @@ describe('MavenUtils', () => {
         mavenUser: '[user]',
         mavenPassword: '[password]'
       })
-      expect(result).eql(`repository(url: "${httpsRepoUrl}") { authentication(userName: user, password: password) }`)
+      expect(result).eql(`
+    repositories {
+        maven {
+            url = "${httpsRepoUrl}"
+            credentials {
+                username = ${mavenTestUser}
+                password = ${mavenTestPassword}
+            }
+        }
+    }`)
     })
 
     it('should return undefined for an unknown repository type', () => {
