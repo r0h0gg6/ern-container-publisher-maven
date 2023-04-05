@@ -69,7 +69,6 @@ export default class MavenPublisher implements ContainerPublisher {
       path.join(containerPath, 'lib', 'build.gradle'),
       `
 apply plugin: 'maven-publish'
-apply plugin: 'signing'
 
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
@@ -97,7 +96,6 @@ ${MavenUtils.targetRepositoryGradleStatement(url, {
   mavenPassword: extra && extra.mavenPassword,
   mavenUser: extra && extra.mavenUser,
 })}
-${MavenUtils.isSigningRequired(url)}
   }`
     )
 
