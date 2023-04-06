@@ -117,17 +117,6 @@ export default class MavenUtils {
     return false
   }
 
-  public static isSigningRequired(repoUrl: string): string | void {
-    if (this.isLocalMavenRepo(repoUrl)) {
-      return ''
-    }
-    return `
-    signing {
-        useGpgCmd()
-        sign(publishing.publications.release)
-    }`
-  }
-
   public static createLocalMavenDirectoryIfDoesNotExist(repoUrl: string) {
     const dir = FILE_REGEX.exec(repoUrl)![1]
     if (!fs.existsSync(dir)) {
