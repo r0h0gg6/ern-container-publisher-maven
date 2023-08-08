@@ -53,15 +53,15 @@ export default class MavenUtils {
       if (isMavenUserVar || isMavenPwdVar) {
         authBlock = `
             credentials {
-                username = ${mavenUser!.slice(1,-1)}
-                password = ${mavenPassword!.slice(1, -1)}
+                username = "${mavenUser!.slice(1,-1)}"
+                password = "${mavenPassword!.slice(1, -1)}"
             }`
       } // Check if mavenUser or mavenPassword is to be appended as value in the authentication bean
       else if (mavenUser || mavenPassword) {
         authBlock = `
             credentials {
-                username = ${mavenUser}
-                password = ${mavenPassword}
+                username = "${mavenUser}"
+                password = "${mavenPassword}"
             }`
       }
       // --config '{"mavenUser": "myUser","mavenPassword": "myPassword"}'
