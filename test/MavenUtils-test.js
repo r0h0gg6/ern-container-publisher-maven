@@ -86,8 +86,8 @@ describe('MavenUtils', () => {
         maven {
             url = "${httpRepoUrl}"
             credentials {
-                username = ${mavenTestUser}
-                password = ${mavenTestPassword}
+                username = "${mavenTestUser}"
+                password = "${mavenTestPassword}"
             }
         }
     }`)
@@ -103,8 +103,8 @@ describe('MavenUtils', () => {
         maven {
             url = "${httpRepoUrl}"
             credentials {
-                username = ${mavenTestUser}
-                password = ${mavenTestPassword}
+                username = "${mavenTestUser}"
+                password = "${mavenTestPassword}"
             }
         }
     }`)
@@ -130,8 +130,8 @@ describe('MavenUtils', () => {
         maven {
             url = "${httpsRepoUrl}"
             credentials {
-                username = ${mavenTestUser}
-                password = ${mavenTestPassword}
+                username = "${mavenTestUser}"
+                password = "${mavenTestPassword}"
             }
         }
     }`)
@@ -147,8 +147,8 @@ describe('MavenUtils', () => {
         maven {
             url = "${httpsRepoUrl}"
             credentials {
-                username = ${mavenTestUser}
-                password = ${mavenTestPassword}
+                username = "${mavenTestUser}"
+                password = "${mavenTestPassword}"
             }
         }
     }`)
