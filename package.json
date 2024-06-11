@@ -1,6 +1,6 @@
 {
   "name": "ern-container-publisher-maven",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "Electrode Native Maven Container Publisher",
   "main": "./dist/index.js",
   "files": [
