@@ -71,7 +71,7 @@ export default class MavenPublisher implements ContainerPublisher {
 apply plugin: 'maven-publish'
 
 task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from android.sourceSets.main.java.srcDirs
 }
 
