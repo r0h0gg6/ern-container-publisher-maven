@@ -86,16 +86,24 @@ publishing {
                 groupId = "${extra.groupId}"
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
-                from components["release"]
+                // AGP 8.x compatibility: use 'default' component instead of 'release'
+                if (components.findByName('release')) {
+                    from components.release
+                } else if (components.findByName('default')) {
+                    from components.default
+                } else {
+                    // Fallback for manual configuration
+                    artifact bundleReleaseAar
+                }
                 artifact tasks.androidSourcesJar
             }
         }
     }
 
 ${MavenUtils.targetRepositoryGradleStatement(url, {
-  mavenPassword: extra && extra.mavenPassword,
-  mavenUser: extra && extra.mavenUser,
-})}
+        mavenPassword: extra && extra.mavenPassword,
+        mavenUser: extra && extra.mavenUser,
+      })}
   }`
     )
 
