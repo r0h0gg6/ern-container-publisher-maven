@@ -65,7 +65,9 @@ publishing {
                 groupId = "${extra.groupId}"
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
-                from components.release
+                if (components.findByName('release')) {
+                    from components.release
+                } 
                 artifact tasks.androidSourcesJar
             }
         }
