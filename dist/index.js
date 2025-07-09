@@ -69,6 +69,9 @@ publishing {
                     from components.release
                 } else if (components.findByName('default')) {
                     from components.default
+                } else {
+                    // Fallback for manual configuration
+                    artifact bundleReleaseAar
                 }
                 artifact tasks.androidSourcesJar
             }
