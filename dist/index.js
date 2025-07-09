@@ -67,7 +67,9 @@ publishing {
                 version = "${containerVersion}"
                 if (components.findByName('release')) {
                     from components.release
-                } 
+                } else if (components.findByName('default')) {
+                    from components.default
+                }
                 artifact tasks.androidSourcesJar
             }
         }
