@@ -65,15 +65,7 @@ publishing {
                 groupId = "${extra.groupId}"
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
-                // AGP 8.x compatibility: use 'default' component instead of 'release'
-                if (components.findByName('release')) {
-                    from components.release
-                } else if (components.findByName('default')) {
-                    from components.default
-                } else {
-                    // Fallback for manual configuration
-                    artifact bundleReleaseAar
-                }
+                from components.release
                 artifact tasks.androidSourcesJar
             }
         }
