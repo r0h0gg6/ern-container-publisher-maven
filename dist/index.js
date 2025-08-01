@@ -79,8 +79,10 @@ ${MavenUtils_1.default.targetRepositoryGradleStatement(url, {
 }
 
 // Ensure androidSourcesJar task runs before publication tasks
-tasks.withType(GenerateModuleMetadata) {
-    dependsOn androidSourcesJar
+tasks.whenTaskAdded { task ->
+    if (task.name.contains('generateMetadataFileFor') && task.name.contains('Publication')) {
+        task.dependsOn androidSourcesJar
+    }
 }
   }`);
             try {
