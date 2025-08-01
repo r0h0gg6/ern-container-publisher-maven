@@ -3,7 +3,6 @@ import { shell, childProcess, log, NativePlatform } from 'ern-core'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
-import process from 'process'
 const { execp } = childProcess
 import MavenUtils from './MavenUtils'
 
@@ -87,7 +86,7 @@ publishing {
                 groupId = "${extra.groupId}"
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
-                from components.release
+                from components.default
                 artifact androidSourcesJar
             }
         }
@@ -97,7 +96,6 @@ ${MavenUtils.targetRepositoryGradleStatement(url, {
         mavenPassword: extra && extra.mavenPassword,
         mavenUser: extra && extra.mavenUser,
       })}
-}
   }`
     )
 

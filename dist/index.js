@@ -16,7 +16,6 @@ const ern_core_1 = require("ern-core");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const os_1 = __importDefault(require("os"));
-const process_1 = __importDefault(require("process"));
 const { execp } = ern_core_1.childProcess;
 const MavenUtils_1 = __importDefault(require("./MavenUtils"));
 class MavenPublisher {
@@ -66,7 +65,7 @@ publishing {
                 groupId = "${extra.groupId}"
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
-                from components.release
+                from components.default
                 artifact androidSourcesJar
             }
         }
@@ -76,7 +75,6 @@ ${MavenUtils_1.default.targetRepositoryGradleStatement(url, {
                 mavenPassword: extra && extra.mavenPassword,
                 mavenUser: extra && extra.mavenUser,
             })}
-}
   }`);
             try {
                 ern_core_1.log.info('[=== Starting build and publication ===]');
@@ -93,7 +91,7 @@ ${MavenUtils_1.default.targetRepositoryGradleStatement(url, {
     }
     buildAndUploadArchive() {
         return __awaiter(this, void 0, void 0, function* () {
-            const gradlew = /^win/.test(process_1.default.platform) ? 'gradlew' : './gradlew';
+            const gradlew = /^win/.test(process.platform) ? 'gradlew' : './gradlew';
             return execp(`${gradlew} publish`);
         });
     }
