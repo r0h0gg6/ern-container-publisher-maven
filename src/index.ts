@@ -87,7 +87,7 @@ publishing {
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
                 from components.release
-                artifact tasks.androidSourcesJar
+                artifact androidSourcesJar
             }
         }
     }
