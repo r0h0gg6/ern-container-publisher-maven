@@ -99,8 +99,10 @@ ${MavenUtils.targetRepositoryGradleStatement(url, {
       })}
 }
 
-afterEvaluate {
-    tasks.withType(GenerateModuleMetadata).configureEach {
+gradle.projectsEvaluated {
+    tasks.matching { task -> 
+        task.name.contains('generateMetadataFileFor') && task.name.contains('Publication')
+    }.configureEach {
         dependsOn androidSourcesJar
     }
 }
