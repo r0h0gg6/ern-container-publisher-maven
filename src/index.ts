@@ -79,17 +79,17 @@ artifacts {
     archives androidSourcesJar
 }
 
-afterEvaluate {
-  publishing {
-      publications {
-          release(MavenPublication) {
-                  groupId = "${extra.groupId}"
-                  artifactId = "${extra.artifactId}"
-                  version = "${containerVersion}"
-                  from components.release
-                  artifact androidSourcesJar
-          }
-      }
+publishing {
+    publications {
+        release(MavenPublication) {
+            afterEvaluate {
+                groupId = "${extra.groupId}"
+                artifactId = "${extra.artifactId}"
+                version = "${containerVersion}"
+                from components.release
+                artifact androidSourcesJar
+            }
+        }
     }
 
 ${MavenUtils.targetRepositoryGradleStatement(url, {
