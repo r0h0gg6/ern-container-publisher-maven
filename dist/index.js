@@ -65,7 +65,7 @@ publishing {
                 groupId = "${extra.groupId}"
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
-                artifact bundleReleaseAar
+                from components.release
                 artifact tasks.androidSourcesJar
             }
         }
