@@ -3,6 +3,7 @@ import { shell, childProcess, log, NativePlatform } from 'ern-core'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
+import process from 'process'
 const { execp } = childProcess
 import MavenUtils from './MavenUtils'
 
@@ -96,6 +97,12 @@ ${MavenUtils.targetRepositoryGradleStatement(url, {
         mavenPassword: extra && extra.mavenPassword,
         mavenUser: extra && extra.mavenUser,
       })}
+}
+
+// Ensure androidSourcesJar task runs before publication tasks
+tasks.withType(GenerateModuleMetadata) {
+    dependsOn androidSourcesJar
+}
   }`
     )
 
