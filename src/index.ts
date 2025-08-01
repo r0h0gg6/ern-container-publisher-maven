@@ -88,7 +88,7 @@ publishing {
                 artifactId = "${extra.artifactId}"
                 version = "${containerVersion}"
                 from components.release
-                artifact tasks.androidSourcesJar
+                artifact androidSourcesJar
             }
         }
     }
@@ -97,14 +97,6 @@ ${MavenUtils.targetRepositoryGradleStatement(url, {
         mavenPassword: extra && extra.mavenPassword,
         mavenUser: extra && extra.mavenUser,
       })}
-}
-
-gradle.projectsEvaluated {
-    tasks.matching { task -> 
-        task.name.contains('generateMetadataFileFor') && task.name.contains('Publication')
-    }.configureEach {
-        dependsOn androidSourcesJar
-    }
 }
   }`
     )
